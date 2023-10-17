@@ -1,0 +1,42 @@
+ion-content{
+  --background: url('../../assets/images/Background.jpeg') no-repeat center/cover fixed;
+}
+
+.home-section {
+  text-align: center;
+  position: relative;
+  left: 0;
+  right: 0;
+  top: 50%;
+  transform: translateY(-100%);
+  .heading{
+    text-align: center;
+      h1{
+          font-size: 1.9rem;
+          font-family:'Times New Roman';
+          font-weight: bolder;
+      }
+      .animated-heading {
+        animation: fadeInUp 1s ease forwards; /* Cambiamos "opacity" a 1 para que quede estático al final de la animación */
+        opacity: 0;
+      }
+      
+      @keyframes fadeInUp {
+        0% {
+          opacity: 0;
+          transform: translateY(20px);
+        }
+        100% {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      
+      
+  }
+  ion-button{
+    --background: #dd9492;
+    color: #141414;
+    font-weight: bold;
+  }
+}

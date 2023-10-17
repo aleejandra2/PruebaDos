@@ -1,0 +1,11 @@
+ion-content{
+  text-align: center;
+  transform: translateY(20%);
+  h1{
+    font-family: 'Times New Roman';
+  }
+  ion-button{
+    --background: #f6c8c7;
+    color: black;
+  }
+}

@@ -1,0 +1,26 @@
+<ion-toolbar >
+  <ion-buttons slot="end" routerLink="/home">
+    <ion-button> Back </ion-button>
+  </ion-buttons>
+</ion-toolbar>
+
+<ion-content [fullscreen]="true">
+  <br>
+  <ion-title class="title-animation">Recuperar</ion-title>
+  <form [formGroup]="formRecuperar">
+    <ion-item class="prueba">
+      <ion-input 
+        label="Usuario:"
+        labelPlacement="floating"
+        [clearInput]="true"
+        placeholder="Ingrese su nombre de usuario"
+        formControlName="usuario"
+        errorText="Debe ingresar su nombre de usuario"
+        required>
+      </ion-input>
+    </ion-item>
+    <br>
+    <ion-button size="small" (click)="mostrarContrasenia()">Ingresar</ion-button>
+
+  </form>
+</ion-content>

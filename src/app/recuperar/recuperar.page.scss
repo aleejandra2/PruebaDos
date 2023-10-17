@@ -1,0 +1,35 @@
+ion-content{
+    --background: url('../../assets/images/back1.jpeg') no-repeat center/cover fixed;
+    
+
+    .prueba{
+        transform: translateY(150%);
+    }
+
+    ion-button{
+        --background: #dd9492;
+        color: #141414;
+        font-weight: bold;
+        transform: translateY(400%);
+    }
+}
+
+ion-title{
+    font-family:'Times New Roman';
+    transform: translateY(-40%);
+    font-size: 1.6rem;
+}
+
+.title-animation {
+    animation: colorChange 6s infinite alternate;
+  }
+  
+  @keyframes colorChange {
+    0% {
+      color: #dd9492;
+    }
+    100% {
+        color: #6b201d;
+      }
+  }
+  

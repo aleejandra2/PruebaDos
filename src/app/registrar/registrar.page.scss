@@ -1,0 +1,19 @@
+ion-content{
+    --background: url('../../assets/images/back2.jpeg') no-repeat center/cover fixed;
+    .heading{
+        text-align: center;
+        font-family:'Times New Roman';
+    }
+}
+
+.registrar{
+    text-align: center;
+    --background: #dd9492;
+}
+
+.error-message {
+    color: red;
+    font-size: 14px;
+    margin-top: 4px;
+  }
+

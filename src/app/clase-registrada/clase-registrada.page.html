@@ -1,0 +1,39 @@
+<ion-toolbar>
+  <ion-buttons slot="end" routerLink="/home">
+    <ion-button (click)="cerrarSesion()"> Cerrar sesion </ion-button>
+  </ion-buttons>
+</ion-toolbar>
+
+
+
+<ion-content [fullscreen]="true" >
+  <br>
+  <ion-title>Clase Registrada</ion-title>
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Clase</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ul class="mostrar">
+        <li *ngIf="splitResultado()['Nombre Profesor']">Nombre Profesor: {{ splitResultado()['Nombre Profesor'] }}</li>
+        <li *ngIf="splitResultado()['Hora']">Hora: {{ splitResultado()['Hora'] }}</li>
+        <li *ngIf="splitResultado()['sala']">Sala: {{ splitResultado()['sala'] }}</li>
+        <li *ngIf="splitResultado()['Dia']">Día: {{ splitResultado()['Dia'] }}</li>
+      </ul>
+    </ion-card-content>
+  </ion-card>
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Información del Usuario</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ul class="mostrar">
+        <li> Nombre: {{ datoUsuario.nombre }}</li>
+        <li> Apellido: {{ datoUsuario.apellido }}</li>        
+        <li> RUT: {{ datoUsuario.rut }}</li>
+      </ul>
+    </ion-card-content>
+  </ion-card>
+
+  
+</ion-content>
