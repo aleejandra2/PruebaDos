@@ -8,14 +8,18 @@ import { RegistrarPageRoutingModule } from './registrar-routing.module';
 
 import { RegistrarPage } from './registrar.page';
 
+import { HttpClientModule } from '@angular/common/http';
+
+import { RegionesComponent } from '../component/regiones/regiones.component';
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
     IonicModule,
-    RegistrarPageRoutingModule
+    RegistrarPageRoutingModule,
+    HttpClientModule
   ],
-  declarations: [RegistrarPage]
+  declarations: [RegistrarPage, RegionesComponent]
 })
 export class RegistrarPageModule {}

@@ -2,7 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 import { AlertController, ModalController  } from '@ionic/angular';
 
+import { HttpClient } from '@angular/common/http';
 
+import { RegionesService } from '../services/regiones.service';
 
 export interface Usuario {
   nombre: string;
@@ -13,7 +15,7 @@ export interface Usuario {
   // correo: string;
   contraseña: string;
   usuario: string;
-  
+
 }
 @Component({
   selector: 'app-registrar',
@@ -25,23 +27,34 @@ export class RegistrarPage implements OnInit {
   formRegistro!: FormGroup;
   usuarios: Usuario[] = [];
 
-  // Esto es lo de las escuelas hay algo que le falta 
+  // Esto es lo de las escuelas hay algo que le falta
   // porque las opciones de las carreras no sale
   // realmente no se como le tienes con los "nombres" puesto a cada cosa
-  
+
   // carrera: string = '';
   // escuela: string = '';
   opcionesCarrera: string[] = [];
 
-  constructor(public formBuilder: FormBuilder,private alertController: AlertController, private modalController: ModalController) {
+  regiones: any[] = [];
+  regionSeleccionada: any;
+
+  constructor(private formBuilder: FormBuilder,private alertController: AlertController, private modalController: ModalController,
+    private regionesService: RegionesService, private http: HttpClient) {
+    // this.formRegistro = this.formBuilder.group({
+    //   'nombre': new FormControl("", Validators.required),
+    //   'apellido': new FormControl("", Validators.required),
+    //   'rut': new FormControl("", Validators.required),
+    //   'escuela': new FormControl("", Validators.required),
+    //   'carrera': new FormControl("", Validators.required),
+    //   // 'correo': new FormControl("", [Validators.required, Validators.email]),
+    //   'contraseña': new FormControl("", Validators.required)
+    // });
     this.formRegistro = this.formBuilder.group({
-      'nombre': new FormControl("", Validators.required),
-      'apellido': new FormControl("", Validators.required),
-      'rut': new FormControl("", Validators.required),
-      'escuela': new FormControl("", Validators.required),
-      'carrera': new FormControl("", Validators.required),
-      // 'correo': new FormControl("", [Validators.required, Validators.email]),
-      'contraseña': new FormControl("", Validators.required)
+      nombre: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(12)]],
+      apellido: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(12)]],
+      rut: ['', [Validators.required, Validators.minLength(8), Validators.maxLength(9)]],
+      region: ['', Validators.required],  // Agregar un control para 'region'
+      contraseña: ['', [Validators.required, Validators.minLength(5), Validators.maxLength(12)]],
     });
    }
 
@@ -50,8 +63,20 @@ export class RegistrarPage implements OnInit {
     if (usuariosRegistrados) {
       this.usuarios = JSON.parse(usuariosRegistrados);
     }
+    this.obtenerRegiones();
   }
 
+
+  obtenerRegiones() {
+    this.regionesService.obtenerRegiones().subscribe(
+      (data) => {
+        this.regiones = data.data;
+      },
+      (error) => {
+        console.error('Error no se pueden obtener las regiones: ', error);
+      }
+    );
+  }
 
   async registrar(){
     console.log("Guardar")
@@ -63,7 +88,7 @@ export class RegistrarPage implements OnInit {
         message: 'Tiene que completar todos los datos',
         buttons: ['Aceptar'],
       });
-  
+
       await alert.present();
       return;
     }
@@ -84,7 +109,7 @@ export class RegistrarPage implements OnInit {
     this.usuarios.push(nuevoUsuario);
 
     localStorage.setItem('usuarios', JSON.stringify(this.usuarios));
-    
+
     const nombreUsuario = nuevoUsuario.usuario;
     this.formRegistro.reset();
     const alert = await this.alertController.create({
@@ -125,13 +150,13 @@ export class RegistrarPage implements OnInit {
         'Técnico Audiovisual',
         'Ingeniería en Sonido',
       ];
-    } 
+    }
     else if (escuelaSeleccionada === 'Gastronomia') {
       this.opcionesCarrera = [
         'Gastronomia',
         'Gastronomia Internacional',
       ];
-    } 
+    }
     else if (escuelaSeleccionada === 'Informatica y Telecomunicaciones') {
       this.opcionesCarrera = [
         'Analista Programador',
