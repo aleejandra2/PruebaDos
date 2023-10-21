@@ -10,50 +10,62 @@
       <h1>Registrar</h1>
     </div>
 
-    <form [formGroup]="formRegistro" (ngSubmit)="registrar()">
+    <!-- <form [formGroup]="formRegistro" (ngSubmit)="registrar()"> -->
+      <div class="ion-padding center">
+        <ion-item>
+          <ion-label position="floating">Nombre</ion-label>
+          <ion-input
+            [(ngModel)]="nombre"
+            name="nombre"
+            type="text"
+            placeholder="Introduce tu nombre"
+            required
+            minlength="3"
+            maxlength="12"
+          ></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label position="floating">Apellido</ion-label>
+          <ion-input
+            [(ngModel)]="apellido"
+            name="apellido"
+            type="text"
+            placeholder="Introduce tu apellido"
+            required
+            minlength="3"
+            maxlength="12"
+          ></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label position="floating">Rut (sin puntos ni guiones)</ion-label>
+          <ion-input
+            [(ngModel)]="rut"
+            name="rut"
+            type="text"
+            placeholder="Introduce tu rut"
+            required
+            minlength="8"
+            maxlength="9"
+          ></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-select [(ngModel)]="region" label="Región" placeholder="Seleccione región" name="region" (ionChange)="onRegionChange($event)">
+            <ion-select-option *ngFor="let region of regiones" [value]="region.id">{{ region?.nombre }}</ion-select-option>
+          </ion-select>
+        </ion-item>
       <ion-item>
-        <ion-input
-          label="Nombre:"
-          labelPlacement="floating"
-          [clearInput]="true"
-          placeholder="Introduce tu nombre"
-          formControlName="nombre"
-          errorText="Debe ingresar su nombre entre 3 y 12 caracteres"
-          maxlength="12"
-          minlength="3"
-          required
-        ></ion-input>
+        <ion-select label="Escuela" placeholder="Selecciona escuela" [(ngModel)]="escuela" (ionChange)="onEscuelaChange($event)">
+          <ion-select-option value="Administracion y Negocio">Administracion y Negocio</ion-select-option>
+          <ion-select-option value="Comunicacion">Comunicacion</ion-select-option>
+          <ion-select-option value="Gastronomia">Gastronomia</ion-select-option>
+          <ion-select-option value="Informatica y Telecomunicaciones">Informatica y Telecomunicaciones</ion-select-option>
+          <ion-select-option value="Salud">Salud</ion-select-option>
+          <ion-select-option value="Turismo y Hoteleria">Turismo y Hoteleria</ion-select-option>
+        </ion-select>
       </ion-item>
       <ion-item>
-        <ion-input
-          label="Apellido:"
-          labelPlacement="floating"
-          [clearInput]="true"
-          placeholder="Introduce tu apellido"
-          formControlName="apellido"
-          errorText="Debe ingresar su apellido entre 3 y 12 caracteres"
-          maxlength="12"
-          minlength="3"
-          required
-        ></ion-input>
-      </ion-item>
-      <ion-item>
-        <ion-input
-          label="Rut:"
-          labelPlacement="floating"
-          [clearInput]="true"
-          placeholder="Introduce tu rut (sin puntos ni guíon)"
-          formControlName="rut"
-          errorText="Debe ingresar su rut"
-          maxlength="9"
-          minlength="8"
-          required
-        ></ion-input>
-      </ion-item>
-
-      <ion-item>
-        <ion-select label="Región" placeholder="Seleccione región" formControlName="region">
-          <ion-select-option *ngFor="let region of regiones" [value]="region.id">{{ region?.nombre }}</ion-select-option>
+        <ion-select label="Carrera" placeholder="Selecciona carrera" [(ngModel)]="carrera">
+          <ion-select-option *ngFor="let option of opcionesCarrera" [value]="option">{{ option }}</ion-select-option>
         </ion-select>
       </ion-item>
 
@@ -63,16 +75,17 @@
           labelPlacement="floating"
           type="password"
           placeholder="Introduce tu Contraseña"
-          formControlName="contraseña"
           errorText="Debe ingresar una contraseña entre 5 y 12 de longitud"
+          [(ngModel)]="contrasenia"
           maxlength="12"
           minlength="5"
           required
         ></ion-input>
       </ion-item>
       <div class="action-button ion-padding">
-        <ion-button size="small" class="registrar" slot="end" type="submit">Registrar</ion-button>
+        <ion-button size="small" class="registrar" slot="end" type="submit" (click)="registro()" >Registrar</ion-button>
       </div>
-    </form>
+    </div>
+    <!-- </form> -->
   </div>
 </ion-content>
