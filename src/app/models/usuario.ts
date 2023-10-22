@@ -1,3 +1,9 @@
+export interface Clase {
+  profesor: string;
+  hora: string;
+  sala: string;
+  dia: string;
+}
 export interface Usuario{
     usuario:string;
     nombre:string;
@@ -8,4 +14,7 @@ export interface Usuario{
     escuela: string;
     carrera: string;
     contrasenia:string;
+    latitude: number;
+    longitude:number;
+    clase: Clase;
 }

@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { UsuariosService } from '../services/usuarios.service';
 import { AlertController } from '@ionic/angular';
-import { Usuario } from '../models/usuario';
+import { Usuario, Clase } from '../models/usuario';
 import { Camera, CameraResultType, CameraSource } from '@capacitor/camera';
 import { DomSanitizer } from '@angular/platform-browser';
 
@@ -59,6 +59,34 @@ export class ClaseRegistradaPage implements OnInit {
 
   async ngOnInit() {
     this.usuarioActual = await this.usuariosService.getUsuarioActual();
+    if (this.usuarioActual && this.resultado) {
+      // Divide el resultado del escaneo y obtiene los datos
+      const resultadoDividido = this.splitResultado();
+
+      // Verifica si las propiedades necesarias existen en resultadoDividido
+      if (
+        resultadoDividido['Nombre Profesor'] &&
+        resultadoDividido['Hora'] &&
+        resultadoDividido['sala'] &&
+        resultadoDividido['Dia']
+      ) {
+        // Actualiza el atributo clase del usuario actual
+        this.usuarioActual.clase = {
+          profesor: resultadoDividido['Nombre Profesor'],
+          hora: resultadoDividido['Hora'],
+          sala: resultadoDividido['sala'],
+          dia: resultadoDividido['Dia']
+        };
+
+        // Llama al servicio para actualizar el usuario actual
+        await this.usuariosService.setUsuarioActual(this.usuarioActual);
+
+        // Asegúrate de que se actualice el usuario en el almacenamiento
+        await this.usuariosService.actualizarUsuarioRegistrado(this.usuarioActual);
+      } else {
+        console.error('No se encontraron todos los datos necesarios en el resultado del escaneo.');
+      }
+    }
   }
 
 
@@ -73,15 +101,29 @@ export class ClaseRegistradaPage implements OnInit {
         resultadoDividido[nombre.trim()] = valor.trim();
       }
     });
-
+    console.log('Resultado dividido:', resultadoDividido);
     return resultadoDividido;
   }
 
   getCurrentLocation() {
     if ('geolocation' in navigator) {
-      navigator.geolocation.getCurrentPosition((position) => {
+      navigator.geolocation.getCurrentPosition(async (position) => {
         this.latitude = position.coords.latitude;
         this.longitude = position.coords.longitude;
+
+        const usuarioActual = await this.usuariosService.getUsuarioActual();
+        if (usuarioActual) {
+          // Actualiza la latitud y longitud del usuario actual
+          usuarioActual.latitude = this.latitude;
+          usuarioActual.longitude = this.longitude;
+
+          // Llama al servicio para actualizar el usuario actual
+          await this.usuariosService.setUsuarioActual(usuarioActual);
+
+          await this.usuariosService.actualizarUsuarioRegistrado(usuarioActual);
+        } else {
+          console.error('Usuario actual no encontrado');
+        }
       }, (error) => {
         console.error('Error obteniendo la ubicación', error);
       });
@@ -89,6 +131,7 @@ export class ClaseRegistradaPage implements OnInit {
       console.error('Geolocalización no es compatible en este dispositivo');
     }
   }
+
 
   async cerrarSesion() {
     // Llama al método de servicio para cerrar la sesión

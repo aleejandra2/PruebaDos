@@ -6,6 +6,7 @@ import { HttpClient } from '@angular/common/http';
 import { UsuariosService } from '../services/usuarios.service';
 import { RegionesService } from '../services/regiones.service';
 import { Router } from '@angular/router';
+import { Clase } from '../models/usuario';
 
 @Component({
   selector: 'app-registrar',
@@ -22,6 +23,15 @@ export class RegistrarPage implements OnInit {
     escuela = '';
     carrera = '';
     contrasenia = '';
+    latitude = 0;
+    longitude = 0;
+    clase: Clase = {
+      profesor: '',  
+      hora: '',
+      sala: '',
+      dia: ''
+
+    };
 
     opcionesCarrera: string[] = [];
 
@@ -76,12 +86,18 @@ export class RegistrarPage implements OnInit {
   const regionSeleccionada = this.regiones.find(region => region.id === regionId);
   // const nombreRegion = regionSeleccionada.nombre;
   // this.comuna = '';
+  const clase: Clase = {
+    profesor: this.clase.profesor,
+    hora: this.clase.hora,
+    sala: this.clase.sala,
+    dia: this.clase.dia
+  };
 
   const numeros = this.rut.replace(/\./g, '');
     const rutFormateado = numeros.slice(0, -1).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.') + '-' + numeros.slice(-1);
   const success = await this.UsuariosService.registro(
     usuario, this.contrasenia, this.nombre, this.apellido, rutFormateado,
-    this.region, this.comuna,this.escuela, this.carrera
+    this.region, this.comuna,this.escuela,this.latitude,this.longitude,clase,this.carrera
     );
 
     if (success) {

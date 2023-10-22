@@ -1,4 +1,4 @@
-import { Usuario } from './../models/usuario';
+import { Usuario, Clase } from './../models/usuario';
 import { Injectable } from '@angular/core';
 import { Preferences } from '@capacitor/preferences';
 
@@ -18,6 +18,9 @@ export class UsuariosService {
     region:number,
     comuna:number,
     escuela: string,
+    latitude: number,
+    longitude: number,
+    clase: Clase,
     carrera: string): Promise<boolean> {
 
     try {
@@ -34,7 +37,10 @@ export class UsuariosService {
         region:region,
         comuna:comuna,
         escuela: escuela,
-        carrera: carrera
+        carrera: carrera,
+        latitude: latitude,
+        longitude: longitude,
+        clase: clase
       };
 
       const usuariosExistente = await Preferences.get({ key: 'usuarios' });
@@ -88,8 +94,30 @@ export class UsuariosService {
   }
 
   async setUsuarioActual(usuario: Usuario): Promise<void> {
-    await Preferences.set({ key: 'usuarioActual', value: JSON.stringify(usuario) });
+    return new Promise<void>(async (resolve) => {
+      await Preferences.set({ key: 'usuarioActual', value: JSON.stringify(usuario) });
+      resolve();
+    });
   }
+  async actualizarUsuarioRegistrado(usuario: Usuario): Promise<void> {
+    const usuariosExistente = await Preferences.get({ key: 'usuarios' });
+    const usuarios: Usuario[] = usuariosExistente.value ? JSON.parse(usuariosExistente.value) : [];
+
+    const usuarioRegistrado = usuarios.find(u => u.usuario === usuario.usuario);
+
+    if (usuarioRegistrado) {
+      // Actualiza los valores de latitud y longitud
+      usuarioRegistrado.latitude = usuario.latitude;
+      usuarioRegistrado.longitude = usuario.longitude;
+
+      // Actualiza la clase del usuario
+    usuarioRegistrado.clase = usuario.clase;
+    }
+
+    await Preferences.set({ key: 'usuarios', value: JSON.stringify(usuarios) });
+  }
+
+
 
   async getUsuarioActual(): Promise<Usuario | null> {
     const usuarioActualString = await Preferences.get({ key: 'usuarioActual' });
