@@ -1,25 +1,31 @@
 ion-content{
     --background: url('../../assets/images/back2.jpeg') no-repeat center/cover fixed;
-    
+
     ion-card{
         transform: translateY(20%);
     }
-    
+
     ion-card-title{
         font-family:'Times New Roman';
         font-size: 28px;
         text-align: center;
     }
+    ion-button{
+      --background: #dd9492;
+      color: #141414;
+      font-weight: bold;
+    }
+    ion-title{
+      transform: translateY(-40%);
+      font-size: 26px;
+      font-family:'Times New Roman';
+  }
 
 }
-ion-title{
-    transform: translateY(-40%);
-    font-size: 26px;
-    font-family:'Times New Roman';
-}
+
 .mostrar {
     font-size: 18px;
     font-family:'Times New Roman';
-    
+
 }
-  
+

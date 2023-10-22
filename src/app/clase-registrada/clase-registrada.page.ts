@@ -3,6 +3,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { UsuariosService } from '../services/usuarios.service';
 import { AlertController } from '@ionic/angular';
 import { Usuario } from '../models/usuario';
+import { Camera, CameraResultType, CameraSource } from '@capacitor/camera';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-clase-registrada',
@@ -12,17 +14,6 @@ import { Usuario } from '../models/usuario';
 export class ClaseRegistradaPage implements OnInit {
   resultado!: string;
   usuarioActual: any;
-  // usuarios: Usuario[] = [];
-  // datoUsuario: Usuario = {
-  //   nombre: '',
-  //   apellido: '',
-  //   rut: '',
-  //   escuela: '',
-  //   carrera: '',
-  //   // correo: '',
-  //   contraseña: '',
-  //   usuario: ''
-  // };
     usuario = '';
     nombre = '';
     apellido = '';
@@ -33,9 +24,33 @@ export class ClaseRegistradaPage implements OnInit {
     carrera = '';
     contrasenia = '';
 
+    latitude: number = 0; // Valor inicial
+    longitude: number = 0; // Valor inicial
+
+    imageSource:any;
+    takePicture = async () => {
+    const image = await Camera.getPhoto({
+      quality: 90,
+      allowEditing: false,
+      resultType: CameraResultType.Uri,
+      source:CameraSource.Prompt
+    });
+
+    // this.imageSource = 'data:image/jpeg;base64,' + image.base64String;
+    // console.log(this.imageSource)
+    this.imageSource= this.domSanitizer.bypassSecurityTrustUrl(image.webPath ? image.webPath : "")
+  };
+  getPhoto(){
+    return this.imageSource
+  }
 
 
-  constructor(private usuariosService: UsuariosService,private route: ActivatedRoute,private alertController: AlertController,private router: Router) {
+  constructor(
+    private usuariosService: UsuariosService,
+    private route: ActivatedRoute,
+    private alertController: AlertController,
+    private router: Router,
+    private domSanitizer:DomSanitizer) {
     this.route.queryParams.subscribe(params => {
       this.resultado = params['resultado'];
     });
@@ -44,14 +59,6 @@ export class ClaseRegistradaPage implements OnInit {
 
   async ngOnInit() {
     this.usuarioActual = await this.usuariosService.getUsuarioActual();
-
-  // Obtener los datos del usuario actual y mostrarlos
-  //   const usuarioActualString = localStorage.getItem('usuarioActual');
-
-  // if (usuarioActualString) {
-  //   this.datoUsuario = JSON.parse(usuarioActualString);
-  // }
-  //   this.datosUsuario();
   }
 
 
@@ -70,23 +77,19 @@ export class ClaseRegistradaPage implements OnInit {
     return resultadoDividido;
   }
 
-  // datosUsuario() {
+  getCurrentLocation() {
+    if ('geolocation' in navigator) {
+      navigator.geolocation.getCurrentPosition((position) => {
+        this.latitude = position.coords.latitude;
+        this.longitude = position.coords.longitude;
+      }, (error) => {
+        console.error('Error obteniendo la ubicación', error);
+      });
+    } else {
+      console.error('Geolocalización no es compatible en este dispositivo');
+    }
+  }
 
-  //   const usuarioId = this.route.snapshot.paramMap.get('usuarioId');
-  //   const usuarioString = localStorage.getItem('usuarios');
-  //   if (usuarioString) {
-  //     this.usuarios = JSON.parse(usuarioString);
-  //     const usuarioEncontrado = this.usuarios.find(usuario => usuario.usuario === usuarioId);
-  //     if (usuarioEncontrado) {
-  //       this.datoUsuario = usuarioEncontrado;
-  //     }
-  //   }
-
-  // }
-  // cerrarSesion() {
-  //   localStorage.removeItem('usuarioActual');
-  //   this.router.navigate(['/home']);
-  // }
   async cerrarSesion() {
     // Llama al método de servicio para cerrar la sesión
     await this.usuariosService.cerrarUsuarioActual();

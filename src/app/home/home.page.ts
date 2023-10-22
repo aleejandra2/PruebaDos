@@ -11,7 +11,6 @@ import { UsuariosService } from '../services/usuarios.service';
 export class HomePage {
   usuario: string = '';
   contrasenia: string = '';
-  // usuarios: Usuario[] = [];
 
   constructor(
     private usuariosService: UsuariosService,
@@ -50,40 +49,9 @@ export class HomePage {
 
     await alert.present();
   }
-  // async login(){
-  //   var form = this.formLogin.value;
 
-  //   const usuarioString = localStorage.getItem('usuarios');
-
-  // if (usuarioString) {
-  //   this.usuarios = JSON.parse(usuarioString);
-
-  //   const usuarioEncontrado = this.usuarios.find(usuario => usuario.usuario === form.usuario && usuario.contraseña === form.contraseña);
-
-  //   if (usuarioEncontrado) {
-  //     console.log('ingresar')
-  //     localStorage.setItem('usuarioActual', JSON.stringify(usuarioEncontrado));
-  //     this.router.navigate(['/qr']);
-  //   }else{
-  //     const alert = await this.alertController.create({
-  //       header: 'Datos Incorrectos',
-  //       message: 'Tiene que completar todos los datos',
-  //       buttons: ['Aceptar'],
-  //     });
-  //     await alert.present();
-  //   }
-  // } else {
-  //   const alert = await this.alertController.create({
-  //     header: 'Usuario no encontrado',
-  //     message: 'El usuario no existe',
-  //     buttons: ['Aceptar'],
-  //   });
-  //   await alert.present();
-  // }
-// }
-
-// resetPass() {
-//   this.router.navigate(['/recuperar']);
-// }
+  resetPass() {
+    this.router.navigate(['/recuperar']);
+  }
 
 }

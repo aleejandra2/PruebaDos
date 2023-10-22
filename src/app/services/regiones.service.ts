@@ -8,9 +8,9 @@ import { Observable } from 'rxjs';
 export class RegionesService {
   private apiUrl = 'https://dev.matiivilla.cl/duoc/location/region';
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
-  obtenerRegiones(): Observable<any> {
-    return this.http.get<any>(this.apiUrl);
+  getDatos(): Observable<any> {
+    return this.http.get(this.apiUrl);
   }
 }

@@ -1,3 +1,4 @@
+import { ComunaService } from './../services/comuna.service';
 import { Component, OnInit } from '@angular/core';
 import { AlertController, IonSelect, ModalController  } from '@ionic/angular';
 
@@ -16,37 +17,36 @@ export class RegistrarPage implements OnInit {
     nombre = '';
     apellido = '';
     rut = '';
-    region = '';
-    comuna = '';
+    region: number = 0;
+    comuna: number = 0;
     escuela = '';
     carrera = '';
     contrasenia = '';
 
-  opcionesCarrera: string[] = [];
+    opcionesCarrera: string[] = [];
 
-  regiones: any[] = [];
-  regionSeleccionada: any;
+    regiones: { id: number; nombre: string }[] = [];
+    comunas: { id: number; nombre: string }[] = [];
 
-  constructor(private UsuariosService: UsuariosService,private router: Router,private alertController: AlertController, private modalController: ModalController,
-    private regionesService: RegionesService, private http: HttpClient) {
+    regionSeleccionada: any;
+
+  constructor(
+    private UsuariosService: UsuariosService,
+    private router: Router,
+    private alertController: AlertController,
+    private modalController: ModalController,
+    private regionesService: RegionesService,
+    private http: HttpClient,
+    private comunaService: ComunaService
+    ) {
 
    }
 
-  ngOnInit() {
-    this.obtenerRegiones();
-  }
+    ngOnInit() {
+    }
 
 
-  obtenerRegiones() {
-    this.regionesService.obtenerRegiones().subscribe(
-      (data) => {
-        this.regiones = data.data;
-      },
-      (error) => {
-        console.error('Error no se pueden obtener las regiones: ', error);
-      }
-    );
-  }
+  //Validacion del registro
   async registro() {
     if (this.nombre.length < 3 || this.nombre.length > 12) {
       this.alertaCampos('Nombre inválido', 'El nombre debe tener entre 3 y 12 caracteres.');
@@ -60,12 +60,6 @@ export class RegistrarPage implements OnInit {
       this.alertaCampos('Rut inválido', 'El rut debe tener entre 8 y 9 caracteres.');
       return;
     }
-
-    // if (this.usuario.length < 3 || this.usuario.length > 8) {
-    //   this.alertaCampos('Nombre de usuario inválido', 'El nombre de usuario debe tener entre 3 y 8 caracteres.');
-    //   return;
-    // }
-
     if (this.contrasenia.length < 5 || this.contrasenia.length > 12) {
       this.alertaCampos('Contraseña inválido', 'La contraseña debe tener entre 5 y 12 caracteres.');
       return;
@@ -80,15 +74,16 @@ export class RegistrarPage implements OnInit {
 
     const regionId = this.regionSeleccionada;
   const regionSeleccionada = this.regiones.find(region => region.id === regionId);
-  const nombreRegion = regionSeleccionada.nombre;
-  this.comuna = '';
+  // const nombreRegion = regionSeleccionada.nombre;
+  // this.comuna = '';
 
   const numeros = this.rut.replace(/\./g, '');
     const rutFormateado = numeros.slice(0, -1).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.') + '-' + numeros.slice(-1);
   const success = await this.UsuariosService.registro(
     usuario, this.contrasenia, this.nombre, this.apellido, rutFormateado,
-    nombreRegion, this.comuna,this.escuela, this.carrera
-  );
+    this.region, this.comuna,this.escuela, this.carrera
+    );
+
     if (success) {
       this.router.navigate(['/home']);
     } else {
@@ -102,13 +97,41 @@ export class RegistrarPage implements OnInit {
       buttons: ['OK']
     });
 
-  await alert.present();
+    await alert.present();
 
 
   }
-  onRegionChange(event: any) {
-    this.regionSeleccionada = event.detail.value;
+
+//Trae las region de la api
+  async ionViewWillEnter() {
+    this.regionesService.getDatos().subscribe(
+      (data: any) => {
+        this.regiones = data.data;
+      },
+      (error) => {
+        console.error('Error al obtener las regiones desde la API: ', error);
+      }
+    );
   }
+
+
+//obtiene las comunas de la api
+  onRegionChange() {
+    if (this.region) {
+      this.comunaService.getComunas(this.region).subscribe(
+        (data: any) => {
+          this.comunas = data.data;
+        },
+        (error) => {
+          console.error('Error al obtener las comunas desde la API: ', error);
+        }
+      );
+    }
+  }
+
+
+
+
 
   async alertaCampos(titulo: string, mensaje: string) {
     const alert = await this.alertController.create({
@@ -120,6 +143,7 @@ export class RegistrarPage implements OnInit {
     await alert.present();
   }
 
+  //Aviso si hay un usuario existente
   async alertaUsuarioExistente() {
     const alert = await this.alertController.create({
       header: 'Nombre de usuario en uso',
@@ -129,50 +153,8 @@ export class RegistrarPage implements OnInit {
 
     await alert.present();
   }
-  // async registrar(){
-  //   console.log("Guardar")
-  //   var form = this.formRegistro.value;
 
-  //   if(this.formRegistro.invalid){
-  //     const alert = await this.alertController.create({
-  //       header: 'Alert',
-  //       message: 'Tiene que completar todos los datos',
-  //       buttons: ['Aceptar'],
-  //     });
-
-  //     await alert.present();
-  //     return;
-  //   }
-
-  //   const rutFormateado = this.formatearRUT(form.rut);
-  //   var usuario = form.nombre.charAt(0).toLowerCase() + '.' + form.apellido.toLowerCase();
-
-  //   var nuevoUsuario: Usuario = {
-  //     nombre: form.nombre.charAt(0).toUpperCase() + form.nombre.slice(1).toLowerCase(),
-  //     apellido: form.apellido.charAt(0).toUpperCase() + form.apellido.slice(1).toLowerCase(),
-  //     rut: rutFormateado,
-  //     escuela: form.escuela,
-  //     carrera: form.carrera,
-  //     // correo: form.correo,
-  //     contraseña: form.contraseña,
-  //     usuario: usuario
-  //   };
-  //   this.usuarios.push(nuevoUsuario);
-
-  //   localStorage.setItem('usuarios', JSON.stringify(this.usuarios));
-
-  //   const nombreUsuario = nuevoUsuario.usuario;
-  //   this.formRegistro.reset();
-  //   const alert = await this.alertController.create({
-  //     header: '¡Registro exitoso!',
-  //     subHeader: 'Tu nombre de usuario es:',
-  //     message: nombreUsuario,
-  //     buttons: ['OK']
-  //   });
-
-  // await alert.present();
-  // }
-
+  //da formato al rut (12.345.678-9)
   formatearRUT(rut: string): string {
     const numeros = rut.replace(/\./g, '');
     const rutFormateado = numeros.slice(0, -1).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.') + '-' + numeros.slice(-1);

@@ -15,18 +15,18 @@ export class RegionesComponent  implements OnInit {
   constructor(private regionesService: RegionesService) { }
 
   ngOnInit() {
-    this.obtenerRegiones();
+    // this.obtenerRegiones();
   }
 
-  obtenerRegiones() {
-    this.regionesService.obtenerRegiones().subscribe(
-      (data) => {
-        this.regiones = data.data;
-      },
-      (error) => {
-        console.error('Error no se pueden obtener las regiones: ', error);
-      }
-    );
-  }
+  // obtenerRegiones() {
+  //   this.regionesService.obtenerRegiones().subscribe(
+  //     (data) => {
+  //       this.regiones = data.data;
+  //     },
+  //     (error) => {
+  //       console.error('Error no se pueden obtener las regiones: ', error);
+  //     }
+  //   );
+  // }
 
 }

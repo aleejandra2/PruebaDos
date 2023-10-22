@@ -15,8 +15,8 @@ export class UsuariosService {
     nombre:string,
     apellido: string,
     rut: string,
-    region:string,
-    comuna:string,
+    region:number,
+    comuna:number,
     escuela: string,
     carrera: string): Promise<boolean> {
 

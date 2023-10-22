@@ -48,11 +48,24 @@
             maxlength="9"
           ></ion-input>
         </ion-item>
-        <ion-item>
-          <ion-select [(ngModel)]="region" label="Región" placeholder="Seleccione región" name="region" (ionChange)="onRegionChange($event)">
-            <ion-select-option *ngFor="let region of regiones" [value]="region.id">{{ region?.nombre }}</ion-select-option>
-          </ion-select>
-        </ion-item>
+
+         <!-- Selección de Región -->
+    <ion-item>
+      <ion-label position="stacked">Región</ion-label>
+      <ion-select [(ngModel)]="region" (ionChange)="onRegionChange()">
+        <ion-select-option *ngFor="let reg of regiones" [value]="reg.id">{{ reg.nombre }}</ion-select-option>
+      </ion-select>
+    </ion-item>
+
+    <!-- Selección de Comuna (se muestra solo cuando se ha seleccionado una región) -->
+    <ion-item *ngIf="region">
+      <ion-label position="stacked">Comuna</ion-label>
+      <ion-select [(ngModel)]="comuna">
+        <ion-select-option *ngFor="let com of comunas" [value]="com.id">{{ com.nombre }}</ion-select-option>
+      </ion-select>
+    </ion-item>
+
+
       <ion-item>
         <ion-select label="Escuela" placeholder="Selecciona escuela" [(ngModel)]="escuela" (ionChange)="onEscuelaChange($event)">
           <ion-select-option value="Administracion y Negocio">Administracion y Negocio</ion-select-option>
