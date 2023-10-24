@@ -15,18 +15,12 @@ const routes: Routes = [
   {
     path: 'registrar',
     loadChildren: () => import('./registrar/registrar.module').then( m => m.RegistrarPageModule),
-    // canActivate: [RutasGuard],
-    // data: {
-    //   'allowUnauthenticatedAccess': true,
-    // },
+
   },
   {
     path: 'recuperar',
     loadChildren: () => import('./recuperar/recuperar.module').then( m => m.RecuperarPageModule),
-    // canActivate: [RutasGuard],
-    // data: {
-    //   'allowUnauthenticatedAccess': true,
-    // },
+
   },
   {
     path: 'qr',

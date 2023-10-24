@@ -24,8 +24,8 @@ export class ClaseRegistradaPage implements OnInit {
     carrera = '';
     contrasenia = '';
 
-    latitude: number = 0; // Valor inicial
-    longitude: number = 0; // Valor inicial
+    latitude: number = 0;
+    longitude: number = 0;
 
     imageSource:any;
     takePicture = async () => {
@@ -36,8 +36,6 @@ export class ClaseRegistradaPage implements OnInit {
       source:CameraSource.Prompt
     });
 
-    // this.imageSource = 'data:image/jpeg;base64,' + image.base64String;
-    // console.log(this.imageSource)
     this.imageSource= this.domSanitizer.bypassSecurityTrustUrl(image.webPath ? image.webPath : "")
   };
   getPhoto(){
@@ -135,7 +133,6 @@ export class ClaseRegistradaPage implements OnInit {
   async cerrarSesion() {
     // Llama al método de servicio para cerrar la sesión
     await this.usuariosService.cerrarUsuarioActual();
-    // Redirige al usuario a la página de inicio de sesión u otra página según tu flujo de la aplicación
     this.router.navigate(['/home']);
   }
 
