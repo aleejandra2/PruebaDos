@@ -101,7 +101,6 @@ export class ClaseRegistradaPage implements OnInit {
         resultadoDividido[nombre.trim()] = valor.trim();
       }
     });
-    console.log('Resultado dividido:', resultadoDividido);
     return resultadoDividido;
   }
 

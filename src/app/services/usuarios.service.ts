@@ -6,7 +6,7 @@ import { Preferences } from '@capacitor/preferences';
   providedIn: 'root'
 })
 export class UsuariosService {
-
+  private usuarioAutenticado = false;
   constructor() { }
 
   async registro(
@@ -80,6 +80,9 @@ export class UsuariosService {
       return null;
     }
   }
+  isAuthenticated(): boolean {
+    return this.usuarioAutenticado;
+  }
 
   async validarUsuario(usuario: string, contrasenia: string): Promise<boolean> {
     const usuariosExistente = await Preferences.get({ key: 'usuarios' });
@@ -88,6 +91,7 @@ export class UsuariosService {
     const usuarioEncontrado = usuarios.find(u => u.usuario === usuario);
 
     if (usuarioEncontrado) {
+      this.usuarioAutenticado = true;
       return usuarioEncontrado.contrasenia === contrasenia;
     }
     return false;

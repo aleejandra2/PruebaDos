@@ -19,6 +19,7 @@ export class HomePage {
 
 
   }
+
   async guardar() {
     const usuarioValido = await this.usuariosService.validarUsuario(this.usuario, this.contrasenia);
 

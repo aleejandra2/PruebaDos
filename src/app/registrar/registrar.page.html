@@ -52,7 +52,7 @@
          <!-- Selección de Región -->
     <ion-item>
       <ion-label position="stacked">Región</ion-label>
-      <ion-select [(ngModel)]="region" (ionChange)="onRegionChange()">
+      <ion-select placeholder="Seleccione región" [(ngModel)]="region" (ionChange)="onRegionChange()">
         <ion-select-option *ngFor="let reg of regiones" [value]="reg.id">{{ reg.nombre }}</ion-select-option>
       </ion-select>
     </ion-item>
@@ -60,14 +60,15 @@
     <!-- Selección de Comuna (se muestra solo cuando se ha seleccionado una región) -->
     <ion-item *ngIf="region">
       <ion-label position="stacked">Comuna</ion-label>
-      <ion-select [(ngModel)]="comuna">
+      <ion-select placeholder="Seleccione comuna" [(ngModel)]="comuna">
         <ion-select-option *ngFor="let com of comunas" [value]="com.id">{{ com.nombre }}</ion-select-option>
       </ion-select>
     </ion-item>
 
 
       <ion-item>
-        <ion-select label="Escuela" placeholder="Selecciona escuela" [(ngModel)]="escuela" (ionChange)="onEscuelaChange($event)">
+        <ion-label position="stacked">Escuela</ion-label>
+        <ion-select placeholder="Seleccione escuela" [(ngModel)]="escuela" (ionChange)="onEscuelaChange($event)">
           <ion-select-option value="Administracion y Negocio">Administracion y Negocio</ion-select-option>
           <ion-select-option value="Comunicacion">Comunicacion</ion-select-option>
           <ion-select-option value="Gastronomia">Gastronomia</ion-select-option>
@@ -76,8 +77,9 @@
           <ion-select-option value="Turismo y Hoteleria">Turismo y Hoteleria</ion-select-option>
         </ion-select>
       </ion-item>
-      <ion-item>
-        <ion-select label="Carrera" placeholder="Selecciona carrera" [(ngModel)]="carrera">
+      <ion-item *ngIf="escuela" >
+        <ion-label position="stacked">Carrera</ion-label>
+        <ion-select placeholder="Seleccione carrera" [(ngModel)]="carrera">
           <ion-select-option *ngFor="let option of opcionesCarrera" [value]="option">{{ option }}</ion-select-option>
         </ion-select>
       </ion-item>

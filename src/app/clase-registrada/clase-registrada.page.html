@@ -48,7 +48,10 @@
   <ion-button expand="block" size="small" (click)="getCurrentLocation()">Obtener ubicación</ion-button>
   </ion-card>
 <ion-card-content>
-    <img [src]="getPhoto()" style="width: 250px;">
+    <!-- <img [src]="getPhoto()" style="width: 250px;"> -->
+    <div class="image-container">
+      <img [src]="getPhoto()" style="width: 250px;">
+    </div>
     <ion-button expand="block" size="small" (click)="takePicture()"> ¡Hazte una Selfie! </ion-button>
 </ion-card-content>
 
