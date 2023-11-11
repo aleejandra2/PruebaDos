@@ -6,12 +6,12 @@
 </ion-toolbar>
 
 
-<ion-content [fullscreen]="true">
-  <select #selectList (change)="selectCamera(selectList.value)">
+<ion-content [fullscreen]="true" (ionPinch)="handlePinch($event)">
+  <!-- <select #selectList (change)="selectCamera(selectList.value)">
     <option *ngFor="let camera of cameras" value={{camera.label}}>
       {{ camera.label }}
     </option>
-  </select>
+  </select> -->
 
   <zxing-scanner style="width: 500px;"
   [enable]="scannerEnabled"

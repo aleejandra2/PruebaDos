@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Usuario } from '../models/usuario';
 import { UsuariosService } from '../services/usuarios.service';
+import { ZXingScannerComponent } from '@zxing/ngx-scanner';
 
 @Component({
   selector: 'app-qr',
@@ -14,6 +15,8 @@ export class QRPage implements OnInit {
   public myDevice!: MediaDeviceInfo;
   public scannerEnabled=false;
   public results:string[]=[];
+  private zoomFactor = 1;
+  @ViewChild('scanner', { static: false }) zxingScanner!: ZXingScannerComponent;
   // datoUsuario: Usuario = {
   //   nombre: '',
   //   apellido: '',
@@ -38,7 +41,21 @@ export class QRPage implements OnInit {
   // }
 
   }
+  handlePinch(event: any) {
+    const newZoomFactor = this.zoomFactor * event.scale;
 
+    // Limita el zoom a un rango específico si es necesario
+    if (newZoomFactor >= 1 && newZoomFactor <= 5) {
+      this.zoomFactor = newZoomFactor;
+
+      // Accede al elemento de video directamente desde codeReader
+      const videoElement = this.zxingScanner.codeReader as any;
+
+      if (videoElement && videoElement.videoElement) {
+        videoElement.videoElement.style.transform = `scale(${this.zoomFactor})`;
+      }
+    }
+  }
 
   camerasFoundHandler(cameras: MediaDeviceInfo[]){
     this.cameras=cameras;
