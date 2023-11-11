@@ -26,7 +26,7 @@ export class RegistrarPage implements OnInit {
     latitude = 0;
     longitude = 0;
     clase: Clase = {
-      profesor: '',  
+      profesor: '',
       hora: '',
       sala: '',
       dia: ''
@@ -79,7 +79,7 @@ export class RegistrarPage implements OnInit {
       this.alertaUsuarioExistente();
       return;
     }
-    var usuario = this.nombre.charAt(0).toLowerCase() + '.' + this.apellido.toLowerCase();
+    var usuario = this.nombre.charAt(0).toLowerCase() + '.' + this.apellido.toLowerCase() + this.rut.charAt((this.rut.length - 1));
 
 
     const regionId = this.regionSeleccionada;
