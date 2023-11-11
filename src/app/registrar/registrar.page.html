@@ -1,69 +1,47 @@
-<ion-toolbar >
+<ion-toolbar>
   <ion-buttons slot="end" routerLink="/home">
     <ion-button> Back</ion-button>
   </ion-buttons>
 </ion-toolbar>
 
 <ion-content [fullscreen]="true">
-  <div class="home-section ion-padding" >
-    <div class="heading ion-padding" >
+  <div class="home-section ion-padding">
+    <div class="heading ion-padding">
       <h1>Registrar</h1>
     </div>
 
-    <!-- <form [formGroup]="formRegistro" (ngSubmit)="registrar()"> -->
-      <div class="ion-padding center">
-        <ion-item>
-          <ion-label position="floating">Nombre</ion-label>
-          <ion-input
-            [(ngModel)]="nombre"
-            name="nombre"
-            type="text"
-            placeholder="Introduce tu nombre"
-            required
-            minlength="3"
-            maxlength="12"
-          ></ion-input>
-        </ion-item>
-        <ion-item>
-          <ion-label position="floating">Apellido</ion-label>
-          <ion-input
-            [(ngModel)]="apellido"
-            name="apellido"
-            type="text"
-            placeholder="Introduce tu apellido"
-            required
-            minlength="3"
-            maxlength="12"
-          ></ion-input>
-        </ion-item>
-        <ion-item>
-          <ion-label position="floating">Rut (sin puntos ni guiones)</ion-label>
-          <ion-input
-            [(ngModel)]="rut"
-            name="rut"
-            type="text"
-            placeholder="Introduce tu rut"
-            required
-            minlength="8"
-            maxlength="9"
-          ></ion-input>
-        </ion-item>
+    <div class="ion-padding center">
+      <ion-item>
+        <ion-label position="floating">Nombre</ion-label>
+        <ion-input [(ngModel)]="nombre" name="nombre" type="text" placeholder="Introduce tu nombre" required
+          minlength="3" maxlength="12"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">Apellido</ion-label>
+        <ion-input [(ngModel)]="apellido" name="apellido" type="text" placeholder="Introduce tu apellido" required
+          minlength="3" maxlength="12"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">Rut (sin puntos ni guiones)</ion-label>
+        <ion-input [(ngModel)]="rut" name="rut" type="text" placeholder="Introduce tu rut" required minlength="8"
+          maxlength="9"></ion-input>
+      </ion-item>
 
-         <!-- Selección de Región -->
-    <ion-item>
-      <ion-label position="stacked">Región</ion-label>
-      <ion-select placeholder="Seleccione región" [(ngModel)]="region" (ionChange)="onRegionChange()">
-        <ion-select-option *ngFor="let reg of regiones" [value]="reg.id">{{ reg.nombre }}</ion-select-option>
-      </ion-select>
-    </ion-item>
+      <!-- Selección de Región -->
+      <ion-item>
+        <ion-label position="stacked">Región</ion-label>
+        <ion-select placeholder="Seleccione región" [(ngModel)]="region" (ionChange)="onRegionChange()">
+          <ion-select-option *ngFor="let reg of regiones" [value]="reg.id">{{ reg.nombre }}</ion-select-option>
+        </ion-select>
+      </ion-item>
 
-    <!-- Selección de Comuna (se muestra solo cuando se ha seleccionado una región) -->
-    <ion-item *ngIf="region">
-      <ion-label position="stacked">Comuna</ion-label>
-      <ion-select placeholder="Seleccione comuna" [(ngModel)]="comuna">
-        <ion-select-option *ngFor="let com of comunas" [value]="com.id">{{ com.nombre }}</ion-select-option>
-      </ion-select>
-    </ion-item>
+      <!-- Selección de Comuna (se muestra solo cuando se ha seleccionado una región) -->
+      <ion-item *ngIf="region">
+        <ion-label position="stacked">Comuna</ion-label>
+        <ion-select placeholder="Seleccione comuna" [(ngModel)]="comuna">
+          <ion-select-option *ngFor="let com of comunas" [value]="com.id">{{ com.nombre }}</ion-select-option>
+        </ion-select>
+      </ion-item>
 
 
       <ion-item>
@@ -72,12 +50,13 @@
           <ion-select-option value="Administracion y Negocio">Administracion y Negocio</ion-select-option>
           <ion-select-option value="Comunicacion">Comunicacion</ion-select-option>
           <ion-select-option value="Gastronomia">Gastronomia</ion-select-option>
-          <ion-select-option value="Informatica y Telecomunicaciones">Informatica y Telecomunicaciones</ion-select-option>
+          <ion-select-option value="Informatica y Telecomunicaciones">Informatica y
+            Telecomunicaciones</ion-select-option>
           <ion-select-option value="Salud">Salud</ion-select-option>
           <ion-select-option value="Turismo y Hoteleria">Turismo y Hoteleria</ion-select-option>
         </ion-select>
       </ion-item>
-      <ion-item *ngIf="escuela" >
+      <ion-item *ngIf="escuela">
         <ion-label position="stacked">Carrera</ion-label>
         <ion-select placeholder="Seleccione carrera" [(ngModel)]="carrera">
           <ion-select-option *ngFor="let option of opcionesCarrera" [value]="option">{{ option }}</ion-select-option>
@@ -85,20 +64,12 @@
       </ion-item>
 
       <ion-item>
-        <ion-input
-          label="Contraseña:"
-          labelPlacement="floating"
-          type="password"
-          placeholder="Introduce tu Contraseña"
-          errorText="Debe ingresar una contraseña entre 5 y 12 de longitud"
-          [(ngModel)]="contrasenia"
-          maxlength="12"
-          minlength="5"
-          required
-        ></ion-input>
+        <ion-input label="Contraseña:" labelPlacement="floating" type="password" placeholder="Introduce tu Contraseña"
+          errorText="Debe ingresar una contraseña entre 5 y 12 de longitud" [(ngModel)]="contrasenia" maxlength="12"
+          minlength="5" required></ion-input>
       </ion-item>
       <div class="action-button ion-padding">
-        <ion-button size="small" class="registrar" slot="end" type="submit" (click)="registro()" >Registrar</ion-button>
+        <ion-button size="small" class="registrar" slot="end" type="submit" (click)="registro()">Registrar</ion-button>
       </div>
     </div>
   </div>
