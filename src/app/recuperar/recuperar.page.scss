@@ -1,16 +1,11 @@
 ion-content{
     --background: url('../../assets/images/back1.jpeg') no-repeat center/cover fixed;
-    
-
-    .prueba{
-        transform: translateY(150%);
-    }
 
     ion-button{
         --background: #dd9492;
         color: #141414;
         font-weight: bold;
-        transform: translateY(400%);
+
     }
 }
 
@@ -23,7 +18,7 @@ ion-title{
 .title-animation {
     animation: colorChange 6s infinite alternate;
   }
-  
+
   @keyframes colorChange {
     0% {
       color: #dd9492;
@@ -32,4 +27,4 @@ ion-title{
         color: #6b201d;
       }
   }
-  
+
