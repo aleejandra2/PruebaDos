@@ -1,40 +1,26 @@
-
 <ion-content [fullscreen]="true">
-  <div class="home-section ion-padding" >
-    <div class="heading ion-padding" >
+  <div class="home-section ion-padding">
+    <div class="heading ion-padding">
       <h1 class="animated-heading"> Login </h1>
     </div>
 
     <div class="ion-padding center">
       <ion-item>
-        <ion-input
-          [(ngModel)]="usuario"
-          label="Usuario:"
-          labelPlacement="floating"
-          [clearInput]="true"
-          placeholder="Ingrese su nombre de usuario"
-          errorText="Debe ingresar su nombre de usuario"
-          maxlength="25"
+        <ion-input [(ngModel)]="usuario" label="Usuario:" labelPlacement="floating" [clearInput]="true"
+          placeholder="Ingrese su nombre de usuario" errorText="Debe ingresar su nombre de usuario" maxlength="25"
           required>
         </ion-input>
       </ion-item>
       <ion-item>
-        <ion-input
-          [(ngModel)]="contrasenia"
-          label="Contraseña:"
-          labelPlacement="floating"
-          type="password"
-          placeholder="Ingrese su contraseña"
-          errorText="Debe ingresar su contraseña"
-          maxlength="12"
-          minlength="5"
+        <ion-input [(ngModel)]="contrasenia" label="Contraseña:" labelPlacement="floating" type="password"
+          placeholder="Ingrese su contraseña" errorText="Debe ingresar su contraseña" maxlength="12" minlength="5"
           required>
         </ion-input>
       </ion-item>
 
       <ion-button size="small" (click)="guardar()">Ingresar</ion-button>
       <ion-button size="small" slot="end" routerLink="/registrar">Registrar</ion-button>
-      <p>¿Haz olvidado tu contraseña? <a (click)="resetPass() " >Haz click aqui!</a></p>
+      <p>¿Haz olvidado tu contraseña? <a (click)="resetPass() ">Haz click aqui!</a></p>
     </div>
   </div>
 
