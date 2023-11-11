@@ -5,26 +5,14 @@ ion-content{
         --background: #dd9492;
         color: #141414;
         font-weight: bold;
-
     }
 }
 
-ion-title{
+ion-card-title{
     font-family:'Times New Roman';
-    transform: translateY(-40%);
     font-size: 1.6rem;
+    text-align: center;
+    color: #dd9492;
 }
 
-.title-animation {
-    animation: colorChange 6s infinite alternate;
-  }
-
-  @keyframes colorChange {
-    0% {
-      color: #dd9492;
-    }
-    100% {
-        color: #6b201d;
-      }
-  }
 
