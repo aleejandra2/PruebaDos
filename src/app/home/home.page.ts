@@ -16,8 +16,6 @@ export class HomePage {
     private usuariosService: UsuariosService,
     private alertController: AlertController,
     private router: Router) {
-
-
   }
 
   async guardar() {
