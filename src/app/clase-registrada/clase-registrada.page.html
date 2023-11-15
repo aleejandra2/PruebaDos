@@ -6,9 +6,10 @@
 
 
 
-<ion-content [fullscreen]="true" >
+<ion-content [fullscreen]="true">
   <br>
-  <ion-title>Clase Registrada</ion-title>
+
+  <ion-card-title>Clase Registrada</ion-card-title>
   <ion-card>
     <ion-card-header>
       <ion-card-title>Clase</ion-card-title>
@@ -35,23 +36,23 @@
     </ion-card-content>
   </ion-card>
   <ion-card>
-  <ion-list>
-    <ion-item>
-      <ion-label>Latitud:</ion-label>
-      <ion-note slot="end">{{ latitude }}</ion-note>
-    </ion-item>
-    <ion-item>
-      <ion-label>Longitud:</ion-label>
-      <ion-note slot="end">{{ longitude }}</ion-note>
-    </ion-item>
-  </ion-list>
-  <ion-button expand="block" size="small" (click)="getCurrentLocation()">Obtener ubicación</ion-button>
+    <ion-list>
+      <ion-item>
+        <ion-label>Latitud:</ion-label>
+        <ion-note slot="end">{{ latitude }}</ion-note>
+      </ion-item>
+      <ion-item>
+        <ion-label>Longitud:</ion-label>
+        <ion-note slot="end">{{ longitude }}</ion-note>
+      </ion-item>
+    </ion-list>
+    <ion-button expand="block" size="small" (click)="getCurrentLocation()">Obtener ubicación</ion-button>
   </ion-card>
-<ion-card-content>
+  <ion-card-content>
     <div class="image-container">
       <img [src]="getPhoto()" style="width: 250px;">
     </div>
     <ion-button expand="block" size="small" (click)="takePicture()"> ¡Hazte una Selfie! </ion-button>
-</ion-card-content>
+  </ion-card-content>
 
 </ion-content>
