@@ -37,4 +37,3 @@ document.addEventListener('backbutton', () => {
     App["exitApp"]();
   }
 });
-//
