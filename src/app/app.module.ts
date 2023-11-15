@@ -9,8 +9,8 @@ import { AppRoutingModule } from './app-routing.module';
 
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
-import { platform } from 'os';
 
+import { Plugins } from '@capacitor/core';
 @NgModule({
   declarations: [AppComponent],
   imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, FormsModule, HttpClientModule],
@@ -18,20 +18,23 @@ import { platform } from 'os';
   bootstrap: [AppComponent],
 })
 export class AppModule {}
+const { App } = Plugins;
 
-const getConfig = () => {
-  if (isPlatform('hybrid')) {
-    return {
-      hardwareBackButton: true
+const ionicConfig = isPlatform('hybrid')
+  ? {
+      rippleEffect: false,
+      mode: 'md' as const
+    }
+  : {
+      rippleEffect: false,
+      mode: 'md' as const
     };
-  }
-  return {};
-};
-
-const ionicConfig = {
-  ...getConfig(),
-  rippleEffect: false,
-  mode: 'md' as const
-};
 
 IonicModule.forRoot(ionicConfig);
+
+document.addEventListener('backbutton', () => {
+  if (isPlatform('hybrid')) {
+    App["exitApp"]();
+  }
+});
+//
