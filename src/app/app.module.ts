@@ -10,7 +10,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 
-import { Plugins } from '@capacitor/core';
+import { Plugins, Capacitor } from '@capacitor/core';
 @NgModule({
   declarations: [AppComponent],
   imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, FormsModule, HttpClientModule],
@@ -18,23 +18,19 @@ import { Plugins } from '@capacitor/core';
   bootstrap: [AppComponent],
 })
 export class AppModule {}
+
 const { App } = Plugins;
 
-const ionicConfig = isPlatform('hybrid')
-  ? {
-      rippleEffect: false,
-      mode: 'md' as const
-    }
-  : {
-      rippleEffect: false,
-      mode: 'md' as const
-    };
-
-IonicModule.forRoot(ionicConfig);
+let lastTimeBackPress = 0;
+let timePeriodToExit = 2000;
 
 document.addEventListener('backbutton', () => {
-  if (isPlatform('hybrid')) {
-    App["exitApp"]();
+  const currentTime = new Date().getTime();
+  if (isPlatform('hybrid') && isPlatform('android')) {
+    if (currentTime - lastTimeBackPress < timePeriodToExit) {
+      App['exitApp']();
+    } else {
+      lastTimeBackPress = currentTime;
+    }
   }
 });
-
